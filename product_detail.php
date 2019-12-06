@@ -1,9 +1,10 @@
 <?php
 if(isset($_GET['id'])){
     $product_id=$_GET['id'];
-    include "database.php";
+    include ("./include/auth.php");
+    include ("./include/config.php");
     $query = "SELECT * FROM product WHERE product_id=$product_id";
-    $result = mysqli_query($connection, $query) or die(mysqli_error());
+    $result = mysqli_query($link, $query) or die(mysqli_error());
     $row = mysqli_fetch_array($result);
     $product_name = $row["product_name"];
     $product_description = $row["product_description"];
@@ -11,7 +12,7 @@ if(isset($_GET['id'])){
     $product_sales = $row["product_sales"];
     $product_spec = $row["product_spec"];
     $query = "SELECT product_picture_id FROM product_picture WHERE product_id=$product_id";
-    $result = mysqli_query($connection, $query) or die(mysqli_error());
+    $result = mysqli_query($link, $query) or die(mysqli_error());
     $product_pictures= [];
     while($row = mysqli_fetch_array($result)) {
         $product_pictures[] = "product_pictures/$row[0].png";
