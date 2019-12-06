@@ -79,13 +79,7 @@ if(isset($_GET['edit_id'])) {
         Shopping
       </div>
 
-        <!-- Nav Item - Courses -->
-
-        <li class="nav-item">
-            <a class="nav-link" href="course1.php">
-                <i class="fa fa-qrcode"></i>
-                 <span>Shopping</span></a>
-        </li>
+       
 
       <!-- Nav Item - Courses -->
 

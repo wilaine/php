@@ -269,7 +269,7 @@ if($stmt = mysqli_prepare($link,$sql)){
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="h5 font-weight-bold text-primary text-uppercase mb-2"><?php echo "<a href =\"product_detail.php?id=$product_id\"/ ;</a>" ?><?php echo $product_name ?></div>
+                      <div class="h5 font-weight-bold text-primary text-uppercase mb-2"><?php echo "<a href =\"product_detail.php?id=$product_id\"/ ;</a>" ?> <?php echo $product_name; ?></div>
                      <?php echo "<img src=\"$product_cover\"/ width='200' height='200' >"; ?>
                       <div class="h6 mb-0 font-weight-bold text-gray-800"><br><?php echo $product_description?></div>
                       <div class="h6 mb-0 font-weight-bold text-gray-800"><br>RM <?php echo $product_price?></div>

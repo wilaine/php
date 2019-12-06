@@ -84,14 +84,7 @@ include ("./include/config.php");
         Shopping
       </div>
 
-        <!-- Nav Item - Courses -->
-
-        <li class="nav-item">
-            <a class="nav-link" href="course1.php">
-                <i class="fa fa-qrcode"></i>
-                 <span>Shopping</span></a>
-        </li>
-
+       
       <!-- Nav Item - Courses -->
 
         <li class="nav-item">
@@ -116,7 +109,14 @@ include ("./include/config.php");
                  <span>Add Product</span></a>
         </li>
 
-       
+       <!-- Nav Item - Courses -->
+
+        <li class="nav-item">
+            <a class="nav-link" href="product_mgt.php">
+                <i class="fa fa-qrcode"></i>
+                 <span>Product Management</span></a>
+        </li>
+
 
 
 
@@ -339,7 +339,8 @@ if(isset($_POST['submit'])) {
         $file_tmp = $_FILES['product_cover']['tmp_name'];
         $file_name = $_FILES['product_cover']['name'];
         $file_size = $_FILES["product_cover"]["size"];
-        $file_extension = strtolower(end(explode('.', $file_name)));
+        $temp = (explode('.', $file_name));
+        $file_extension = strtolower(end($temp));
         if (getimagesize($file_tmp) == false) {
             $error[]= "The file cannot be recognize.<br>";
         } elseif ($file_size > 50000000) {
@@ -353,7 +354,8 @@ if(isset($_POST['submit'])) {
             $file_tmp = $_FILES['image_detail']['tmp_name'][$key];
             $file_name = $_FILES['image_detail']['name'][$key];
             $file_size = $_FILES["image_detail"]["size"][$key];
-            $file_extension = strtolower(end(explode('.', $file_name)));
+           $temp = (explode('.', $file_name));
+        $file_extension = strtolower(end($temp));
             if (getimagesize($file_tmp) == false) {
                 $error[]= "The file cannot be recognize.<br>";
             } elseif ($file_size > 50000000) {
@@ -364,7 +366,7 @@ if(isset($_POST['submit'])) {
         }
     }
     if(count($error)==0){
-        include_once "database.php";
+        include_once "./include/config.php";
         $product_name = $_POST["product_name"];
         $product_description = $_POST["product_description"];
         $product_spec = $_POST["product_spec"];
@@ -385,8 +387,9 @@ if(isset($_POST['submit'])) {
                     move_uploaded_file($file_tmp, "product_pictures/" . $last_picture_id . ".png");
                 }
             }
+        
         }
-        header("Location:product_mgt.php");
+         header("location: register_admin.php");
     }else{
         echo "<br>";
          foreach($error as $error_output){
@@ -394,4 +397,5 @@ if(isset($_POST['submit'])) {
          }
     }
 }
+
 ?>
