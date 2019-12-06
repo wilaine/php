@@ -370,23 +370,23 @@ if(isset($_POST['submit'])) {
         $product_spec = $_POST["product_spec"];
         $product_price = $_POST["product_price"];
         $query = "INSERT INTO product(product_name, product_description, product_price, product_spec) VALUES ('$product_name', '$product_description', '$product_price', '$product_spec')";
-        if(mysqli_query($connection, $query)) {
-            $last_product_id = mysqli_insert_id($connection);
+        if(mysqli_query($link, $query)) {
+            $last_product_id = mysqli_insert_id($link);
             $query = "INSERT INTO product_picture(product_id) VALUES ('$last_product_id')";
-            if (mysqli_query($connection, $query)) {
-                $last_picture_id = mysqli_insert_id($connection);
+            if (mysqli_query($link, $query)) {
+                $last_picture_id = mysqli_insert_id($link);
                 $file_tmp = $_FILES['product_cover']['tmp_name'];
                 move_uploaded_file($file_tmp, "product_pictures/" . $last_picture_id . ".png");
             }
             foreach($_FILES['image_detail']['name'] as $key=>$name) {
-                if (mysqli_query($connection, $query)) {
-                    $last_picture_id = mysqli_insert_id($connection);
+                if (mysqli_query($link, $query)) {
+                    $last_picture_id = mysqli_insert_id($link);
                     $file_tmp = $_FILES['image_detail']['tmp_name'][$key];
                     move_uploaded_file($file_tmp, "product_pictures/" . $last_picture_id . ".png");
                 }
             }
         }
-        header("Location:product_management.php");
+        header("Location:product_mgt.php");
     }else{
         echo "<br>";
          foreach($error as $error_output){
@@ -394,5 +394,4 @@ if(isset($_POST['submit'])) {
          }
     }
 }
-
 ?>
