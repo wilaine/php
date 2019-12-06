@@ -2,6 +2,26 @@
 // Initialize the session
 include ("./include/auth.php");
 include ("./include/config.php");
+$query = "SELECT * FROM product";
+$result = mysqli_query($link, $query) or die(mysqli_error());
+if(isset($_GET['delete_id'])) {
+    $product_id = $_GET['delete_id'];
+    $query = "DELETE FROM product WHERE product_id='$product_id'";
+    if(mysqli_query($link, $query)){
+        $query = "SELECT product_picture_id FROM product_picture WHERE product_id=$product_id";
+        $result = mysqli_query($link, $query) or die(mysqli_error());
+        while($row = mysqli_fetch_array($result)) {
+            $product_picture = "product_pictures/$row[0].png";
+            unlink($product_picture) or die("Couldn't delete file");
+        }
+        header("Location:product_management.php");
+    }
+}
+if(isset($_GET['edit_id'])) {
+    $product_id = $_GET['edit_id'];
+    header("Location:edit_product.php?id=$product_id");
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -60,14 +80,7 @@ include ("./include/config.php");
         Shopping
       </div>
 
-        <!-- Nav Item - Courses -->
-
-        <li class="nav-item">
-            <a class="nav-link" href="course1.php">
-                <i class="fa fa-qrcode"></i>
-                 <span>Shopping</span></a>
-        </li>
-
+       
       <!-- Nav Item - Courses -->
 
         <li class="nav-item">
@@ -80,6 +93,20 @@ include ("./include/config.php");
 
       <!-- Divider -->
       <hr class="sidebar-divider">
+
+<?php
+if(isset($_SESSION['username'])){
+$sql ="SELECT id FROM admin WHERE username = ?";
+if($stmt = mysqli_prepare($link,$sql)){
+  mysqli_stmt_bind_param($stmt,"s",$param_username);
+  $param_username = $_SESSION['username'];
+  if (mysqli_stmt_execute($stmt)) {
+                /* store result */
+                mysqli_stmt_store_result($stmt);
+
+                if (mysqli_stmt_num_rows($stmt) == 1) {
+ 
+?>
 
       <!-- Heading -->
       <div class="sidebar-heading">
@@ -107,6 +134,17 @@ include ("./include/config.php");
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
 
+<?php 
+                   
+                }else{
+                  
+                }  
+            }
+}
+
+}
+
+?>
       <!-- Sidebar Toggler (Sidebar) -->
       <div class="text-center d-none d-md-inline">
         <button class="rounded-circle border-0" id="sidebarToggle"></button>
@@ -214,44 +252,35 @@ include ("./include/config.php");
           <div class="row">
 
 
- <!-- Earnings (Monthly) Card Example -->
+            <?php
+                            while($row = mysqli_fetch_array($result)){
+                                $product_id = $row["product_id"];
+                                $product_name = $row["product_name"];
+                                $product_description = $row["product_description"];
+                                $product_price = $row["product_price"];
+                                $product_sales = $row["product_sales"];
+                                $query = "SELECT product_picture_id FROM product_picture WHERE product_id=$product_id";
+                                $product_cover= mysqli_query($link, $query) or die(mysqli_error());
+                                $row = mysqli_fetch_array($product_cover);
+                                $product_cover = "product_pictures/$row[0].png";?>
+            <!-- Earnings (Monthly) Card Example -->
             <div class="col-xl-3 col-md-6 mb-4">
               <div class="card border-left-primary shadow h-100 py-2">
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">MPU3253 Design Thinking</div>
-                      <a href="course1.php">
-                      <div class="h5 mb-0 font-weight-bold text-gray-800" >QRCode</div></a>
+                      <div class="h5 font-weight-bold text-primary text-uppercase mb-2"><?php echo "<a href =\"product_detail.php?id=$product_id\"/ ;</a>" ?><?php echo $product_name ?></div>
+                     <?php echo "<img src=\"$product_cover\"/ width='200' height='200' >"; ?>
+                      <div class="h6 mb-0 font-weight-bold text-gray-800"><br><?php echo $product_description?></div>
+                      <div class="h6 mb-0 font-weight-bold text-gray-800"><br>RM <?php echo $product_price?></div>
                     </div>
                     <div class="col-auto">
-                      <i class="fas fa-calendar fa-2x text-gray-300"></i>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-
-            <!-- Earnings (Monthly) Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4">
-              <div class="card border-left-success shadow h-100 py-2">
-                <div class="card-body">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">NET4204 Network Security</div>
-                      <a href="course1.php">
-                      <div class="h5 mb-0 font-weight-bold text-gray-800" >QRCode</div></a>
-                    </div>
-                    <div class="col-auto">
-                      <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-        <!-- /.container-fluid -->
-
+<?php }?>
 
 
       </div>
