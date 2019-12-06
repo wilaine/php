@@ -85,7 +85,7 @@ if(isset($_GET['edit_id'])) {
 
         <li class="nav-item">
             <a class="nav-link" href="course1.php">
-                <i class="fa fa-qrcode"></i>
+                <i class="fa fa-shopping-cart "></i>
                  <span>Cart</span></a>
         </li>
 
@@ -117,7 +117,7 @@ if($stmt = mysqli_prepare($link,$sql)){
 
         <li class="nav-item">
             <a class="nav-link" href="add_product.php">
-                <i class="fa fa-qrcode"></i>
+                <i class="fa fa-plus-square "></i>
                  <span>Add Product</span></a>
         </li>
 
@@ -125,7 +125,7 @@ if($stmt = mysqli_prepare($link,$sql)){
 
         <li class="nav-item">
             <a class="nav-link" href="product_mgt.php">
-                <i class="fa fa-qrcode"></i>
+                <i class="fa fa-archive "></i>
                  <span>Product Management</span></a>
         </li>
 
@@ -167,17 +167,7 @@ if($stmt = mysqli_prepare($link,$sql)){
             <i class="fa fa-bars"></i>
           </button>
 
-          <!-- Topbar Search -->
-          <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-            <div class="input-group">
-              <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-              <div class="input-group-append">
-                <button class="btn btn-primary" type="button">
-                  <i class="fas fa-search fa-sm"></i>
-                </button>
-              </div>
-            </div>
-          </form>
+         
 
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
@@ -208,8 +198,8 @@ if($stmt = mysqli_prepare($link,$sql)){
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle"  id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Rosemary</span>
-                <img class="img-profile rounded-circle" src="https://images.unsplash.com/photo-1534559529872-1a83a6cbc03d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo $_SESSION["username"]?></span>
+                <img class="img-profile rounded-circle" src="https://cdn2.iconfinder.com/data/icons/user-icon-2-1/100/user_5-15-512.png">
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
